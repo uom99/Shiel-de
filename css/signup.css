@@ -1,0 +1,12 @@
+#myForm .help-block{
+    display: none;
+    font-size: 7pt;
+    /* color:red; */
+  }
+  #myForm .glyphicon{
+    display: none;
+    font-size: 7pt;
+    /* color:red; */
+  }
+
+  a{text-decoration: none;}
