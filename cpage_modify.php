@@ -41,7 +41,7 @@ include "conn.php";
         <div class="d-flex text-muted pt-3">
           <p class="pb-1 mb-0 small lh-sm w-25">
             <strong class="d-block text-gray-dark">닉네임</strong>
-            <input class="form-control " type="text" name="nick" id="nickname" value="<?= $mp_user['c_nick'];?>">
+            <input class="form-control " required type="text" name="nick" id="nickname" value="<?= $mp_user['c_nick'];?>">
           </p>&nbsp;&ensp;
           <input type="button" class="m-0 btn btn-secondary h-25 mt-3" onclick="modify()" value="중복확인">
         </div>
@@ -69,21 +69,21 @@ include "conn.php";
         <div class="d-flex text-muted pt-3">
           <p class="pb-3 mb-0 small lh-sm w-25">
             <strong class="d-block text-gray-dark">이름</strong>
-            <input class="form-control" type="text" name="uname" id="uname" value="<?= $mp_user['c_name'];?>">
+            <input class="form-control" required type="text" name="uname" id="uname" value="<?= $mp_user['c_name'];?>">
           </p>
         </div>
         <hr class="p-0 m-0 border-0">
         <div class="d-flex text-muted pt-3">
           <p class="pb-3 mb-0 small lh-sm w-25 ">
             <strong class="d-block text-gray-dark">기업소개</strong>
-            <textarea class="form-control"name="c_intro" id="c_intro" pattern="[a-z][ㄱ-ㅎ][ㅏ-ㅣ][가-힣][0-9]{100}" placeholder="최대 100자이내" maxlength="100" cols="20" rows="5"><?=$mp_user['c_intro']?></a></textarea>
+            <textarea required class="form-control"name="c_intro" id="c_intro" pattern="[a-z][ㄱ-ㅎ][ㅏ-ㅣ][가-힣][0-9]{100}" placeholder="최대 100자이내" maxlength="100" cols="20" rows="5"><?=$mp_user['c_intro']?></a></textarea>
           </p>
         </div>
         <hr class="p-0 m-0 border-0">
         <div class="d-flex text-muted pt-3">
           <p class="pb-3 mb-0 small lh-sm w-25 ">
             <strong class="d-block text-gray-dark">전화번호</strong>
-            <input class="form-control" type="tel" name="phone" id="phone" value="<?= $mp_user['c_tel'];?>" pattern="[0-9]{2,3,4}-[0-9]{3,4}-[0-9]{4}"  oninput="p_autoHyphen(this)" maxlength="13">
+            <input class="form-control" required type="tel" name="phone" id="phone" value="<?= $mp_user['c_tel'];?>" pattern="[0-9]{2,3,4}-[0-9]{3,4}-[0-9]{4}"  oninput="p_autoHyphen(this)" maxlength="13">
           </p>
         </div>
         <hr class="p-0 m-0 border-0">
