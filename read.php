@@ -1,4 +1,5 @@
 <style>
+  
                   .btn-like .heart-shape {
                     display: inline;
                     color: red;}
@@ -35,13 +36,16 @@
   $sql4 = "select * from board where idx='".$bno."'";
   $result4 = mysqli_query($conn,$sql4); 
   /*좋아요 하트 */
-  $sqli = "select * from likes where idx='$board[idx]'";
+  $sqli = "select * from likes where idx='".$board['idx']."'";
   $resulti = mysqli_query($conn,$sqli);
   $likes = mysqli_fetch_array($resulti);
   /* 댓글 개수 구하기*/
   $sql5 = "select * from reply where idx='".$bno."'";
   $result5 = mysqli_query($conn,$sql5);
   $rep_count = mysqli_num_rows($result5);
+  $sql6 = "select * from likes where idx='".$bno."' AND num='".$usernum."'";
+  $result6 = mysqli_query($conn,$sql6);
+  $fullheart = mysqli_fetch_array($result6);
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,13 +78,10 @@
           <tr>
             <td colspan="5">작성자 : <?=$board['nick']?><span style="float:right">작성일자 : <?=$board['date']?></span></td>
           </tr>
-          <tr>
-          <td colspan="5" style="min-height: 200px; text-align: left;">첨부파일 : <a href="./board_imgs/<?=$board['nick']?>/<?=$board['filename']?>" target="_blank"><?=$board['filename']?></td></a>
-          </tr>
 <tr>
 <?php while($board2 = mysqli_fetch_array($result4)) { 
         $idx = $board2['idx']; 
-        if($likes['like_check']==1){; ?>
+        if($likes['like_check']==1 && $fullheart['num']==$usernum){; ?>
         <td class="like-container">추천 : <button type="button" class="btn-like" data-article-id="'<?=$idx;?>'"  onclick="location.href='likes.php?articleId=<?=$idx;?>'">
           <span class="heart-shape">♥</span> <span class="like-count"><?=$board2['like_count']?></span></button></td>
        <?php }else{; ?>
@@ -90,15 +91,7 @@
 </tr>
           <tr>
             <td colspan="2" style="min-height: 200px; text-align: left;"><?=$board['contents']?><br>
-            <?php 
-            if($board['filename']){ 
-              $photoArr = explode(",",$board['filename']);
-              for($i=0; $i<count($photoArr); $i++){ ?>
-            <img style="" src="./board_imgs/<?=$board['nick']?>/<?=$photoArr[$i]?>" alt="업로드이미지">
-          
-            <?php } ?>
-            </td>
-              <?php } ?>
+       </td>
           </tr>
         </tbody>
       </table>
@@ -166,7 +159,27 @@
   <script src="./js/jquery-3.6.1.min.js"></script>
   <script src="./js/login.js"></script>
   <script src="./js/event.js"></script>
-  <script src="./js/like.js"></script>
+  <script>
+  $(function (){
+
+$(".btn-like").on("click", function(e) {
+  var button = $(e.currentTarget || e.target)
+  var likeCount = button.find(".like-count")
+  var heartShape = button.find(".heart-shape")
+  $.post("./likes.php", {
+      articleId: button.data("articleId")
+  }, function(res) {
+    console.log(res)
+
+      var addCount = (res == "like" ? 1 : res == "unlike" ? -1 : 0)
+      likeCount.text(+likeCount.text() + addCount)
+      heartShape.text(res == "like" ? "♥" : res == "unlike" ? "♡" : "♡")
+  })
+  
+})
+
+});
+</script>
 
 </body>
 

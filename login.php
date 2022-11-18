@@ -11,7 +11,7 @@
 <main class="form-signin ">
   <div class="container bg-white rounded-3">
   <form name="loginSbmt" id="loginSbmt" method="post" action="login_ok.php">
-  <a class="navbar-brand" href="index.php"><img src="./imgs/logo11.png" alt="로고" class="w-75 h-75" aria-current="page" ></a>
+  <a class="navbar-brand" href="index.php"><img src="./imgs/L_logo.png" alt="로고" class=" mt-2" aria-current="page" ></a>
     <br><br><br><br>
 
     <div class="form-check">

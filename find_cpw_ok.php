@@ -44,7 +44,7 @@
         <hr>
         <div class="close-area"></div>
         <div class="content">
-          <form action="reset_pw_ok.php" method="post" id="myForm">
+          <form action="reset_cpw_ok.php" method="post" id="myForm">
 
             <input type="hidden" name="id" value="<?=$id?>">
             <div class="form-group has-feedback mb-3">

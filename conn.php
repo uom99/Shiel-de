@@ -1,8 +1,8 @@
 <?php
   $host = 'localhost';
-  $user = 'root';
-  $pw = '123456';
-  $dbName = 'webp';
+  $user = 'shielde1';
+  $pw = 'ujhkgh1!';
+  $dbName = 'shielde1';
 
   $conn = mysqli_connect($host, $user, $pw, $dbName);
   

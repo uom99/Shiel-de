@@ -19,6 +19,11 @@
 <head>
   <?php include_once "head.html";?>
 
+<style>
+  #editor img{
+    max-width:100%;
+  }
+</style>
 </head>
 
 <body>
@@ -65,30 +70,29 @@
                   <option value="유머">유머</option>
                   <option value="자유">자유</option>
                 </select>&ensp;
-                <button id="btn-image" type="button" oninput="insertImageDate()" class="btn btn-outline-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
-  <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
-  <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z"/>
-</svg></button></td>
+              </td>
             </tr>
             <tr>
-              <td><div contentEditable="true" class="form-control" id="Editor" style="min-height: 350px"
-                  required></div></td>
+              <td><div  id="smarteditor" required>
+                      <textarea class="" name="content" id="editorTxt" style="display:none" required></textarea>
+                  </div></td>
             </tr>
           </tbody>
         </table>
-        <textarea name="content" id="ucontent" style="display:none"></textarea>
-        <input style="display:none" type="file" id="img-selector" class="form-control upload" name="uploadfile[]" accept="image/*" multiple><br><br>
-        <button type="submit" class="btn btn-dark btn-outline-secondary text-white float-end">글쓰기</button>
+        <button type="submit" id="submit_btn" class="btn btn-dark btn-outline-secondary text-white float-end" onclick="submitPost()">글쓰기</button>
         <div style="width: 10px; height: auto; display: inline-block;"></div>
         <button type="button" onclick="location.href='board.php'"
           class="btn btn-dark btn-outline-secondary text-white float-end mx-2">&nbsp;이전&nbsp;</button>
       </form>
     </div>
   </div>
+  <script src="jqery-3.6.1.min.js"></script>
   <script src="/js/login.js"></script>
+  <script type="text/javascript" src="smarteditor/js/HuskyEZCreator.js"></script>
 
   <script>
-    const editor = document.getElementById('Editor');
+    
+    const editor = document.getElementById('editor');
     const btnImage = document.getElementById('btn-image');
     const imageSelector = document.getElementById('img-selector');
     
@@ -98,22 +102,57 @@
 
     imageSelector.addEventListener('change', function (e) {
         const files = e.target.files;
+        console.log(files);
         if (!!files) {
-            insertImageDate(files[0]);
+          for(var i=0;i<files.length;i++){
+            insertImageDate(files[i]);
+          }
         }
     });
     
     function insertImageDate(file) {
         const reader = new FileReader();
         reader.addEventListener('load', function (e) {
-            focuseditor();
+            focusEditor();
             document.execCommand('insertImage', false, `${reader.result}`);
         });
         reader.readAsDataURL(file);
     }
-    function focuseditor(){
-      editor.focus({preventScroll:true});
+
+    function focusEditor() {
+        editor.focus({preventScroll: true});
     }
+</script>
+<script>
+    let oEditors = []
+
+    smartEditor = function() {
+      console.log("Naver SmartEditor")
+      nhn.husky.EZCreator.createInIFrame({
+        oAppRef: oEditors,
+        elPlaceHolder: "editorTxt",
+        sSkinURI: "/smarteditor/SmartEditor2Skin.html",
+        fCreator: "createSEditor2"
+      })
+    }
+
+    $(document).ready(function() {
+      smartEditor()
+    })
+  </script>
+  <script>
+  function submitPost(){
+  oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", [])
+  let content = document.getElementById("editorTxt").value
+
+  if(content == ""  || content == null || content == '&nbsp;' || content == '<br>' || content == '<br />' || content == '<p>&nbsp;</p>') {
+    alert("내용을 입력해주세요.")
+    oEditors.getById["editorTxt"].exec("FOCUS")
+    return
+  } else {
+    console.log(content)
+  }
+}
 </script>
 </body>
 

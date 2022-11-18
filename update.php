@@ -24,7 +24,7 @@
   </header>
   <div class="container mt-5 pt-4">
     <div id="board_write">
-      <form action="update_ok.php/<?php echo $board['idx']; ?>" method="post">
+      <form action="update_ok.php" method="post">
         <input type="hidden" name="idx" value="<?=$bno?>" />
         <table class="table table-striped" style="border: 1px solid #ddddda">
           <thead>
@@ -54,24 +54,68 @@
                 </select></td>
             </tr>
             <tr>
-              <td><textarea class="form-control" placeholder="글 내용" name="content" id="ucontent" style="height: 350px"
-                  required><?=$board['contents']?></textarea></td>
+              <td><div  id="smarteditor" required>
+                      <textarea class="" name="content" id="editorTxt" style="display:none" required><?php $board['contents'] = str_replace("smarteditor/upload/", "upload/", $board['contents']); echo $board['contents']; ?></textarea>
+                      <!-- 
+                      -->
+                  </div>
+              </td>
             </tr>
             <tr>
               <td>
-              <input type="file" class="form-control upload" name="upload_file" accept = "image/png, image/jpeg, image/png">
+              <!-- <input type="file" class="form-control upload" name="upload_file" accept = "image/png, image/jpeg, image/png"> -->
               </td>
             </tr>
           </tbody>
         </table>
-        <button type="submit" class="btn btn-primary float-end">수정완료</button>
+        <button type="submit" class="btn btn-primary float-end" onclick="submitPost()">수정완료</button>
+        <button type="button" onclick="back()"
+          class="btn btn-dark btn-outline-secondary text-white float-end mx-2">&nbsp;이전&nbsp;</button>
       </form>
     </div>
   </div>
-  <script src="js/login.js"></script>
+  <script src="jqery-3.6.1.min.js"></script>
+  <script src="/js/login.js"></script>
+  <script type="text/javascript" src="smarteditor/js/HuskyEZCreator.js"></script>
   <script>
     $('#category').val("<?=$board['category']?>").prop("selected",true);
   </script>
+
+<script>
+    let oEditors = []
+
+    smartEditor = function() {
+      console.log("Naver SmartEditor")
+      nhn.husky.EZCreator.createInIFrame({
+        oAppRef: oEditors,
+        elPlaceHolder: "editorTxt",
+        sSkinURI: "/smarteditor/SmartEditor2Skin.html",
+        fCreator: "createSEditor2"
+      })
+    }
+
+    $(document).ready(function() {
+      smartEditor()
+    })
+
+  </script>
+  <script>
+  function submitPost(){
+  oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", [])
+  let content = document.getElementById("editorTxt").value
+
+  if(content == ""  || content == null || content == '&nbsp;' || content == '<br>' || content == '<br />' || content == '<p>&nbsp;</p>') {
+    alert("내용을 입력해주세요.")
+    oEditors.getById["editorTxt"].exec("FOCUS")
+    return
+  } else {
+    console.log(content)
+  }
+}
+function back(){
+  history.back()
+}
+</script>
 </body>
 
 </html>

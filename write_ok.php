@@ -1,7 +1,7 @@
 <?php
 	include "config.php";
 	include "conn.php";
-	date_default_timezone_set('Asia/Seoul');
+
 	$id = $userid;
 	$num = $usernum;
 	$nick = $usernick;
@@ -9,8 +9,10 @@
 	// $date = date('Y-m-d h:ia');
 	$title = $_POST['title'];
 	$content = $_POST['content'];
+	$content = str_replace("upload/", "smarteditor/upload/", $content);
+	echo $content;
 	$photo = $_FILES['uploadfile'];
-
+	echo $uploadDir;
 	// if($_FILES['uploadfile[]'] != NULL){
 	// 	$tmp_name = $_FILES['uploadfile[]']['tmp_name'];
 	// 	$name = $_FILES['uploadfile[]']['name'];
@@ -21,39 +23,46 @@
 
 
 
-	if($photo != NULL){
-		$tmp_name = $photo['tmp_name'];
-		$name = $photo['name'];
-		$path = "./board_imgs/$usernick";
-		$filenames = array();
+// 	if($photo != NULL){
+// 		$tmp_name = $photo['tmp_name'];
+// 		$name = $photo['name'];
+// 		$path = "./board_imgs/$usernick";
+// 		$filenames = array();
 
-		if(!file_exists($path)){
-				mkdir($path, 0777, true);
-				chmod($path, 0777);
-				for($i=0; $i<count($name); $i++){
-					move_uploaded_file($tmp_name[$i], $path."/".$name[$i]); 
-					array_push($filenames, $name[$i]); 
-					$arrayString = implode(",", $filenames);
-			 }
-		}else{
-				// $up = move_uploaded_file($tmp_name, "$path/$name");
-				for($i=0; $i<count($name); $i++){
-					move_uploaded_file($tmp_name[$i], $path."/".$name[$i]);
-					array_push($filenames, $name[$i]); 
-					$arrayString = implode(",", $filenames);
+// 		if(!file_exists($path)){
+// 				mkdir($path, 0777, true);
+// 				chmod($path, 0777);
+// 				for($i=0; $i<count($name); $i++){
+// 					move_uploaded_file($tmp_name[$i], $path."/".$name[$i]); 
+// 					array_push($filenames, $name[$i]); 
+// 					$arrayString = implode(",", $filenames);
+// 			 }
+// 		}else{
+// 				// $up = move_uploaded_file($tmp_name, "$path/$name");
+// 				for($i=0; $i<count($name); $i++){
+// 					move_uploaded_file($tmp_name[$i], $path."/".$name[$i]);
+// 					array_push($filenames, $name[$i]); 
+// 					$arrayString = implode(",", $filenames);
 			 
-		}
-	}
-}
-	else{
-		$name = "NULL";
-	}
+// 		}
+// 	}
+// }
+// 	else{
+// 		$name = "NULL";
+// 	}
 
 // 	$sql = mq("insert into board(name,pw,title,content,date) 
 // 			values('".$_POST['name']."','".$userpw."','".$_POST['title']."','".$_POST['content']."','".$date."')"); 
+if($content == ""  || $content == null || $content == '&nbsp;' || $content == '<br>' || $content == '<br />' || $content == '<p>&nbsp;</p>') {
+	echo("
+				<script>
+					history.back();
+				</script>
+			");
+	} else {
 	
-	$ai1="alter table board auto_increment =1"; //auto_increment 값 초기화 (삭제 시 번호 비지 않게 하기 위해서)
-	$airesult=mysqli_query($conn,$ai1);
+	// $ai1="alter table board auto_increment =1"; //auto_increment 값 초기화 (삭제 시 번호 비지 않게 하기 위해서)
+	// $airesult=mysqli_query($conn,$ai1);
 	
 	if($role=='3'){
 			$sql="INSERT into
@@ -82,11 +91,15 @@ else{
 ";
 }
 	$result = mysqli_query($conn,$sql);
+
 ?>
 	<script>
 		alert("글쓰기 완료되었습니다.");
 		location.href = 'board.php';
 	</script>
+	<?php } ?>
 	<?php   
-  mysqli_close($conn); ?>
+  mysqli_close($conn); 
+	?>
+
 

@@ -66,40 +66,62 @@ geocoder<?=$com['c_num']?>.addressSearch('<?=$com['c_address']?>', function(resu
 
 <?php } ?>
 
-function locationLoadSuccess(pos){
-    // 현재 위치 받아오기
-    // var currentPos = new kakao.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
-    var currentPos = new kakao.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
 
-    // 지도 이동(기존 위치와 가깝다면 부드럽게 이동)
-    map.panTo(currentPos);
-
-    // 마커 생성
-    var marker = new kakao.maps.Marker({
-        map: map,
-        position: currentPos
-    });
-    var infowindow = new kakao.maps.Infowindow({
-        content: '<div class="form-control rounded-pill" style="width:150px;text-align:center;">현재위치</div>'
-        });
-        infowindow.open(map, marker);
-
-    // 기존에 마커가 있다면 제거
-    marker.setMap(null);
-    marker.setMap(map);
-};
-
-function locationLoadError(pos){
-    alert('위치 정보를 가져오는데 실패했습니다.');
-};
-
-// 위치 가져오기 버튼 클릭시
-function getCurrentPosBtn(){
-    navigator.geolocation.getCurrentPosition(locationLoadSuccess,locationLoadError);
-};
 
 </script>
 
+<script>
+    if (navigator.geolocation) {
+    
+    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+    function getCurrentPosBtn(){
+    navigator.geolocation.getCurrentPosition(function(position) {
+        
+        var lat = position.coords.latitude, // 위도
+            lon = position.coords.longitude; // 경도
+        
+        var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+            message = '<div style="padding:5px;">현재위치!</div>'; // 인포윈도우에 표시될 내용입니다
+        
+        // 마커와 인포윈도우를 표시합니다
+        displayMarker(locPosition, message);
+            
+      });
+    };
+    
+} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+    function getCurrentPosBtn(){
+    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
+        message = 'geolocation을 사용할수 없어요..'
+        
+    displayMarker(locPosition, message);
+}
+};
+// 지도에 마커와 인포윈도우를 표시하는 함수입니다
+function displayMarker(locPosition, message) {
+
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({  
+        map: map, 
+        position: locPosition
+    }); 
+    
+    var iwContent = message, // 인포윈도우에 표시할 내용
+        iwRemoveable = true;
+
+    // 인포윈도우를 생성합니다
+    var infowindow = new kakao.maps.InfoWindow({
+        content : iwContent,
+        removable : iwRemoveable
+    });
+    
+    // 인포윈도우를 마커위에 표시합니다 
+    infowindow.open(map, marker);
+    
+    // 지도 중심좌표를 접속위치로 변경합니다
+    map.setCenter(locPosition);      
+}    
+</script>
 
 </body>
 </html>

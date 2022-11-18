@@ -12,7 +12,7 @@
 <script src="js/modify.js" defer></script>
 </head>
 
-<body style="background-color:#aca193" class="bg-opacity-75">
+<body class="bg-secondary bg-opacity-75">
   <header>
     <?php include_once "header.php" ;?>
   </header>
@@ -30,7 +30,7 @@ include "conn.php";
         <h1 class="h6 mb-0 text-black lh-1 text-center">내 정보 수정</h1>
       </div>
       <a href="index.php" class="ms-auto">
-        <img class="me-3" src="imgs/logo11.png" alt="로고" width="90" height="38"></a>
+        <img class="me-3" src="imgs/logo.png" alt="로고" width="90" height="38"></a>
     </div>
     <form action="mypage_modify_ok.php" method="POST">
     <div class="my-3 p-3 bg-body rounded shadow-sm">
@@ -40,7 +40,7 @@ include "conn.php";
         <div class="d-flex text-muted pt-3">
           <p class="pb-1 mb-0 small lh-sm w-25">
             <strong class="d-block text-gray-dark">닉네임</strong>
-            <input class="form-control " type="text" name="nick" id="nickname" value="<?= $mp_user['nick'];?>">
+            <input class="form-control" required type="text" name="nick" id="nickname" value="<?= $mp_user['nick'];?>">
           </p>&nbsp;&ensp;
           <input type="button" class="m-0 btn btn-secondary h-25 mt-3" onclick="modify()" value="중복확인">
         </div>
@@ -56,7 +56,7 @@ include "conn.php";
         <div class="d-flex text-muted pt-3">
           <p class="pb-3 mb-0 small lh-sm w-25 ">
             <strong class="d-block text-gray-dark">비밀번호</strong>
-            <input class="form-control" type="password" name="pass" id="pass" value="********" disabled>
+            <input class="form-control" type="password" name="pass" id="pass" value="**********" disabled>
           </p>&nbsp;&ensp;
           <input type="button" class="m-0 btn btn-secondary h-25 mt-3" onclick="location.href='pw_change.php'" value="비밀번호 변경">
         </div>
@@ -68,7 +68,7 @@ include "conn.php";
         <div class="d-flex text-muted pt-3">
           <p class="pb-3 mb-0 small lh-sm w-25">
             <strong class="d-block text-gray-dark">이름</strong>
-            <input class="form-control" type="text" name="uname" id="uname" value="<?= $mp_user['uname'];?>">
+            <input class="form-control" required type="text" name="uname" id="uname" value="<?= $mp_user['uname'];?>">
           </p>
         </div>
        
@@ -77,7 +77,7 @@ include "conn.php";
         <div class="d-flex text-muted pt-3">
           <p class="pb-3 mb-0 small lh-sm w-25 ">
             <strong class="d-block text-gray-dark">핸드폰 번호</strong>
-            <input class="form-control" type="tel" name="phone" id="phone" value="<?= $mp_user['phone'];?>" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13">
+            <input class="form-control" required type="tel" name="phone" id="phone" value="<?= $mp_user['phone'];?>" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13">
           </p>
         </div>
         <hr class="p-0 m-0 border-0">
@@ -85,8 +85,9 @@ include "conn.php";
           <p class="pb-3 mb-0 small lh-sm w-25 ">
             <strong class="d-block text-gray-dark">주소</strong>
             <input type="text" class="rounded-3" id="postcode" placeholder="우편번호" name="postcode" required disabled>
-             <input class="form-control" type="text" class="w-100" id="address" name="address"  value="<?= $mp_user['address'];?>" readonly>
             <input type="button" class="btn-outline-secondary rounded-3" onclick="DaumPostcode()" value="주소 찾기"><br>
+             <input class="form-control" type="text" class="w-100" id="address" name="address"  value="<?= $mp_user['address'];?>" readonly>
+            
           </p>
         </div>
         <hr class="p-0 m-0 border-0">

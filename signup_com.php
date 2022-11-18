@@ -57,7 +57,7 @@
         <div class="col-md-1"></div>
         <div class="col-md-2 ">
             <label for="phone_ck"></label>
-            <input type="button" class="form-control" id="bcode_ck" value="인증" name="bcode_ck"  onclick="bcode_chk()" >
+            <input type="button" class="form-control" id="bcode_ck" value="구현중" name="bcode_ck"  onclick="bcode_chk()" >
           </div>
           </div>
           <div class="row">

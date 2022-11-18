@@ -7,6 +7,8 @@
 	$date = date('Y-m-d H:i:s');
 	$title = $_POST['title'];
 	$content = $_POST['content'];
+	$content = str_replace("upload/", "smarteditor/upload/", $content);
+ 	echo $content;
 	/* 받아온 idx값을 선택해서 게시글 수정 */
 	$sql = "update board set date = '".$date."', category='".$category."',title='".$title."',contents='".$content."' where idx='".$bno."'";
   $result = mysqli_query($conn,$sql);

@@ -171,24 +171,24 @@
 
       if (result == 'myboard') {
         $.ajax({
-          url: "mypage.php&type=myboard",
-          type: "GET",
+          url: "mypage_board.php",
+          type: "post",
           data: $("form").serialize(),
         }).done(function(data) {
           $("#input_data").html(data);
         })
       } else if (result == 'myreply') {
         $.ajax({
-          url: "mypage.php&type=myreply",
-          type: "GET",
+          url: "mypage_reply.php",
+          type: "post",
           data: $("form").serialize(),
         }).done(function(data) {
           $("#input_data").html(data);
         })
       } else {
         $.ajax({
-          url: "mypage.php&type=mylikes",
-          type: "GET",
+          url: "mypage_likes.php",
+          type: "post",
           data: $("form").serialize(),
         }).done(function(data) {
           $("#input_data").html(data);

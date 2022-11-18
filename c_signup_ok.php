@@ -12,21 +12,22 @@ include "conn.php";
     $phone = $_POST['phone']; 
     $address = $_POST['address']; 
     $address2 = $_POST['address2']; 
+    $intro = $_POST['intro'];
 
     
     if(isset($email)){
 
-    $sql = "INSERT INTO company (c_name,c_nick,c_id,c_pass,c_bnum,c_tel,c_address,c_add_detail) values('".$uname."','".$nick."','".$id."@".$email."','".$pass."','".$bcode."','".$phone."','".$address."','".$address2."')";
+    $sql = "INSERT INTO company (c_name,c_nick,c_id,c_pass,c_bnum,c_tel,c_address,c_add_detail,c_intro) values('".$uname."','".$nick."','".$id."@".$email."','".$pass."','".$bcode."','".$phone."','".$address."','".$address2."','".$intro."')";
 
     }
     else{
-    $sql = "INSERT INTO company (c_name,c_nick,c_id,c_pass,c_bnum,c_tel,c_address,c_add_detail) values('".$uname."','".$nick."','".$id."@".$email1."','".$pass."','".$bcode."','".$phone."','".$address."','".$address2."')";
+    $sql = "INSERT INTO company (c_name,c_nick,c_id,c_pass,c_bnum,c_tel,c_address,c_add_detail,c_intro) values('".$uname."','".$nick."','".$id."@".$email1."','".$pass."','".$bcode."','".$phone."','".$address."','".$address2."','".$intro."')";
     }
 
     $result = mysqli_query($conn, $sql);
     echo "
 	    <script>
-    	    alert('회원가입이 완료 되었습니다.');
+    	    alert('회원가입이 완료 되었습니다. $sql1');
 	        location.href = 'index.php';
 	    </script>
 	";

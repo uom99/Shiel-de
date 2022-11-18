@@ -109,19 +109,13 @@
             <label for="address">주소</label><br>
             <input type="text" class="rounded-3" id="postcode" placeholder="우편번호" name="postcode" required disabled>
             <input type="button" class="btn-outline-secondary rounded-3" onclick="DaumPostcode()" value="주소 찾기"><br>
-            <input type="text" class="form-control" id="address" placeholder="주소를 입력해주세요" name="address" required readonly>
+            <input type="text" id="h_address" name="h_address" required style="opacity: 0; height:0px;">
+            <input type="text" class="form-control" id="address" placeholder="주소를 입력해주세요" name="address" readonly>
             <div class="invalid-feedback">
               주소를 입력해주세요.
             </div>
             <input type="text" class="form-control" id="address2" name="address2" placeholder="상세주소를 입력해주세요.">
           </div>
-          <div class="custom-control custom-checkbox">
-               <label for="address"><h3>관심사</h3></label><br>
-               <input  class="custom-control-input" type="checkbox" name="reco" id="액" value="액"><label for="액">액티비티 &nbsp</label>
-               <input  class="custom-control-input" type="checkbox" name="reco" id="영" value="영"><label for="영">영화 &nbsp</label>
-               <input  class="custom-control-input" type="checkbox" name="reco" id="전" value="전"><label for="전">전시 &nbsp</label>
-               <input  class="custom-control-input" type="checkbox" name="reco" id="기" value="기" checked="checked"><label for="기">기타 &nbsp</label>
-        </div>
           <hr class="mb-4">
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="aggrement" required>
